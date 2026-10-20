@@ -1,9 +1,11 @@
 package stamboom;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Pet extends Familymember {
 private String species;
-private ArrayList<Person> owners;
+private List<Person> owners = new ArrayList<>();
+
 
 
 	public Pet(String name, int age, String species) {
@@ -20,11 +22,17 @@ private ArrayList<Person> owners;
 		this.species = species;
 	}
 
-	public ArrayList<Person> getOwners() {
-		return owners;
+	public void addOwner(Person owner) {
+		owners.add(owner);
 	}
 
-	public void setOwners(ArrayList<Person> owners) {
-		this.owners = owners;
+	public List<Person> getOwners() {
+		return owners;
+	}
+	@Override
+	public String toString() {
+		return "Pet Name: " + getName() + "\n" +
+				"Species: " + getSpecies() + "\n" +
+				"Owners: " + getOwners();
 	}
 }
