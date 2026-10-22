@@ -112,7 +112,7 @@ createRoot(document.getElementById('root')).render(
 
 ## Stap 2: de pagina vraagt om gegevens
 
-📍 [`frontend/src/App.jsx`, regel 126](../frontend/src/App.jsx#L126) en [regel 139](../frontend/src/App.jsx#L139)
+📍 [`frontend/src/App.jsx`, regel 140](../frontend/src/App.jsx#L140) en [regel 153](../frontend/src/App.jsx#L153)
 
 Direct nadat de pagina getekend is, wil hij weten wie er in de stamboom staan. Daar heeft hij de backend voor nodig.
 
@@ -306,7 +306,7 @@ Het antwoord is nu zo'n tekst als in het JSON-voorbeeld hierboven, maar dan een 
 
 ## Stap 8: de pagina tekent de boom
 
-📍 [`frontend/src/App.jsx`, regel 141](../frontend/src/App.jsx#L141) en [regel 145](../frontend/src/App.jsx#L145)
+📍 [`frontend/src/App.jsx`, regel 155](../frontend/src/App.jsx#L155) en [regel 159](../frontend/src/App.jsx#L159)
 
 Terug in de browser. In stap 3 pakte `response.json()` de tekst uit. In stap 2 zette `setPersons(...)` de lijst in het geheugen.
 Omdat het geheugen veranderd is, tekent React de pagina opnieuw, nu met de personen erin.
@@ -341,7 +341,7 @@ Nu de andere kant op: gegevens van de pagina naar de database. Je klikt bij Jer�
 
 ## Stap 9: de frontend stuurt een nieuwe persoon
 
-📍 [`frontend/src/App.jsx`, regel 163](../frontend/src/App.jsx#L163)
+📍 [`frontend/src/App.jsx`, regel 177](../frontend/src/App.jsx#L177)
 
 Het formulier geeft de ingevulde waarden door aan `create`. Dat doet afhankelijk van de knop iets anders:
 

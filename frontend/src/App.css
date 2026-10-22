@@ -1,84 +1,433 @@
+/* ---------- Pagina ---------- */
 main {
-  max-width: 820px;
+  max-width: 1080px;
   margin: 0 auto;
-  padding: 24px 16px;
-  text-align: left;
+  padding: 24px 16px 64px;
 }
 
-.tree,
-.tree ul {
-  list-style: none;
-  padding-left: 24px;
-  border-left: 2px solid var(--border);
-}
+.ice { color: var(--ice); }
+.orange { color: var(--orange); }
+.muted { color: var(--muted); }
 
-.tree {
-  padding-left: 0;
-  border-left: 0;
-}
-
-.person {
-  padding: 4px 0;
-}
-
-.partner {
-  padding-left: 16px;
-}
-
-.partner > .person {
-  display: inline-block;
-}
-
-.name {
-  cursor: pointer;
-}
-
-.extra {
-  font-size: 0.85em;
-  opacity: 0.7;
-}
-
-.pet {
-  margin-left: 8px;
-  padding: 1px 8px;
-  border-radius: 10px;
-  background: var(--border);
-  font-size: 0.85em;
-}
-
-.pet a {
-  cursor: pointer;
-}
-
-.actions {
-  margin-left: 12px;
-  display: inline-flex;
+/* ---------- Topbalk: omlijnde vakjes, als een dashboard ---------- */
+.topbar {
+  display: flex;
   flex-wrap: wrap;
-  gap: 4px;
+  justify-content: space-between;
+  border: 1px solid var(--border);
+  background: var(--panel);
 }
 
-.actions button {
-  padding: 0 6px;
-  font-size: 0.75em;
-  opacity: 0.55;
+.brand {
+  padding: 12px 16px;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  color: var(--light);
 }
 
-.actions button:hover {
+.stats {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.stat {
+  padding: 12px 16px;
+  border-left: 1px solid var(--border);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+}
+
+.stat b {
+  margin-right: 6px;
+  font-size: 0.95rem;
+  color: var(--ice);
+}
+
+/* ---------- Hero: grote kop in hoofdletters, één lichte knop ---------- */
+.hero {
+  padding: 56px 0 40px;
+}
+
+.eyebrow {
+  margin: 0 0 12px;
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.hero h1 {
+  margin: 0;
+  max-width: 14ch;
+  font-size: clamp(2rem, 6vw, 3.6rem);
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  color: var(--light);
+}
+
+.lead {
+  max-width: 52ch;
+  margin: 16px 0 24px;
+  color: var(--muted);
+}
+
+/* ---------- Knoppen: omlijnd, hoofdletters, gloed bij hover ---------- */
+button {
+  font: inherit;
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 6px 10px;
+  border: 1px solid var(--border-strong);
+  border-radius: 0;
+  background: transparent;
+  color: var(--ice);
+  cursor: pointer;
+  transition: border-color 0.15s, box-shadow 0.15s, background-color 0.15s, color 0.15s;
+}
+
+button:hover {
+  border-color: var(--ice);
+  box-shadow: 0 0 0 1px rgba(143, 216, 255, 0.25), 0 0 16px rgba(143, 216, 255, 0.15);
+}
+
+button:focus-visible,
+input:focus-visible,
+select:focus-visible {
+  outline: 1px solid var(--ice);
+  outline-offset: 2px;
+}
+
+.cta,
+.primary {
+  border-color: var(--light);
+  background: var(--light);
+  color: var(--bg);
+  font-weight: 700;
+}
+
+.cta {
+  padding: 12px 20px;
+  font-size: 0.8rem;
+}
+
+.cta:hover,
+.primary:hover {
+  border-color: var(--ice);
+  background: var(--ice);
+}
+
+.danger {
+  color: var(--orange);
+}
+
+.danger:hover {
+  border-color: var(--orange);
+  box-shadow: 0 0 16px rgba(255, 122, 26, 0.2);
+}
+
+/* ---------- Paneel met de boom ---------- */
+.panel {
+  border: 1px solid var(--border);
+  background: var(--panel);
+}
+
+.panel-head {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--light);
+}
+
+.empty {
+  padding: 24px 16px;
+  color: var(--muted);
+}
+
+.error {
+  padding: 10px 14px;
+  border: 1px solid var(--orange);
+  border-left-width: 4px;
+  background: rgba(255, 122, 26, 0.08);
+  color: var(--orange);
+}
+
+/* ---------- Boom: lijnen tussen ouders en kinderen ---------- */
+.tree {
+  margin: 0;
+  padding: 20px 16px;
+  list-style: none;
+  overflow-x: auto;
+}
+
+.tree ul {
+  margin: 0 0 0 22px;
+  padding: 0 0 0 26px;
+  list-style: none;
+}
+
+.tree li {
+  position: relative;
+  padding: 8px 0;
+}
+
+/* Het horizontale streepje van de verticale lijn naar het kaartje */
+.tree ul > li::before {
+  content: '';
+  position: absolute;
+  left: -26px;
+  top: 30px;
+  width: 22px;
+  border-top: 1px solid var(--border-strong);
+}
+
+/* De verticale lijn per kind; bij het laatste kind stopt hij ter hoogte van het kaartje */
+.tree ul > li::after {
+  content: '';
+  position: absolute;
+  left: -26px;
+  top: 0;
+  bottom: 0;
+  border-left: 1px solid var(--border-strong);
+}
+
+.tree ul > li:last-child::after {
+  bottom: auto;
+  height: 31px;
+}
+
+.couple {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.bond {
+  align-self: center;
+  font-weight: 800;
+  color: var(--orange);
+}
+
+/* ---------- Kaartje per persoon, met hoekhaken ---------- */
+.card {
+  position: relative;
+  min-width: 220px;
+  max-width: 100%;
+  padding: 10px 14px;
+  border: 1px solid var(--border);
+  background: rgba(9, 11, 14, 0.9);
+  animation: rise 0.35s ease both;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.card::before,
+.card::after {
+  content: '';
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-color: var(--ice);
+  border-style: solid;
+  opacity: 0.6;
+  transition: border-color 0.2s, opacity 0.2s;
+}
+
+.card::before {
+  top: -1px;
+  left: -1px;
+  border-width: 1px 0 0 1px;
+}
+
+.card::after {
+  right: -1px;
+  bottom: -1px;
+  border-width: 0 1px 1px 0;
+}
+
+.card.is-selected {
+  border-color: var(--orange);
+  box-shadow: 0 0 24px rgba(255, 122, 26, 0.12);
+}
+
+.card.is-selected::before,
+.card.is-selected::after {
+  border-color: var(--orange);
   opacity: 1;
 }
 
+.card-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+/* De naam is een knop, maar moet eruitzien als tekst */
+.name {
+  padding: 0;
+  border: 0;
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: none;
+  text-align: left;
+  color: var(--light);
+}
+
+.name:hover {
+  box-shadow: none;
+  color: var(--ice);
+}
+
+.tag {
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+}
+
+.pets {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.pet {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 2px 4px 2px 8px;
+  border: 1px solid var(--border);
+  font-size: 0.75rem;
+}
+
+.pet small {
+  color: var(--muted);
+}
+
+.pet-remove {
+  padding: 0 4px;
+  border: 0;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.pet-remove:hover {
+  box-shadow: none;
+  color: var(--orange);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px dashed var(--border);
+}
+
+.extra {
+  margin-top: 6px;
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+
+/* ---------- Formulieren ---------- */
 form {
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
-  margin: 6px 0;
+  margin-top: 10px;
+  animation: rise 0.25s ease both;
 }
 
-form input,
-form select {
-  max-width: 180px;
+input,
+select {
+  min-width: 0;
+  max-width: 190px;
+  padding: 6px 8px;
+  border: 1px solid var(--border-strong);
+  border-radius: 0;
+  background: #0b0f13;
+  color: var(--text);
+  font: inherit;
+  font-size: 0.8rem;
 }
 
-.error {
-  color: #b00020;
+input::placeholder {
+  color: var(--muted);
+}
+
+.hero form input,
+.hero form select {
+  max-width: 220px;
+}
+
+/* ---------- Animatie ---------- */
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* ---------- Telefoon ---------- */
+@media (max-width: 560px) {
+  .hero {
+    padding: 36px 0 28px;
+  }
+
+  .stat {
+    border-left: 0;
+    border-top: 1px solid var(--border);
+    flex: 1;
+  }
+
+  .stats {
+    width: 100%;
+  }
+
+  .card {
+    min-width: 0;
+    width: 100%;
+  }
+
+  .tree ul {
+    margin-left: 8px;
+    padding-left: 16px;
+  }
+
+  .tree ul > li::before {
+    left: -16px;
+    width: 12px;
+  }
+
+  .tree ul > li::after {
+    left: -16px;
+  }
+
+  input,
+  select {
+    max-width: none;
+    flex: 1 1 140px;
+  }
 }
