@@ -216,11 +216,12 @@ Om iets uit de database te halen, heb je eerst een verbinding nodig. Dat is als 
 ```java
 private static final String URL = env("DB_URL", "jdbc:postgresql://localhost:5433/familytree");
 private static final String USER = env("DB_USER", "familytree_app");
-private static final String PASSWORD = env("DB_PASSWORD", "CHANGE_ME");
+// Het wachtwoord heeft bewust geen standaardwaarde: het staat nooit in de code.
 
 public static Connection connect() throws SQLException {
     Class.forName("org.postgresql.Driver");
-    return DriverManager.getConnection(URL, USER, PASSWORD);
+    String password = System.getenv("DB_PASSWORD"); // zelf instellen als omgevingsvariabele
+    return DriverManager.getConnection(URL, USER, password);
 }
 ```
 
