@@ -1,0 +1,8 @@
+.git
+.idea
+.omo
+.m2
+target
+docs
+frontend
+Jenkinsfile

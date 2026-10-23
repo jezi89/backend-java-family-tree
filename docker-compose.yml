@@ -1,0 +1,51 @@
+# Start database, API en frontend samen:  DB_PASSWORD=... docker compose up -d --build
+# BIND_ADDR bepaalt op welk adres de poorten openstaan (standaard overal; in Jenkins staat de poort al
+# alleen op localhost via de dind-container).
+name: stamboom
+
+services:
+  db:
+    image: postgres:18-alpine
+    environment:
+      POSTGRES_USER: familytree_app
+      POSTGRES_DB: familytree
+      POSTGRES_PASSWORD: ${DB_PASSWORD:?Zet de omgevingsvariabele DB_PASSWORD}
+    volumes:
+      - db-data:/var/lib/postgresql
+      # Scripts in deze map draaien alleen de eerste keer, als de database nog leeg is.
+      - ./db/01_schema.sql:/docker-entrypoint-initdb.d/01_schema.sql:ro
+      - ./db/02_seed.sql:/docker-entrypoint-initdb.d/02_seed.sql:ro
+    healthcheck:
+      # -h 127.0.0.1 forceert een TCP-check, zodat "klaar" pas geldt na het opstarten van de echte server.
+      test: ["CMD-SHELL", "pg_isready -h 127.0.0.1 -U familytree_app -d familytree"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile.api
+    environment:
+      DB_URL: jdbc:postgresql://db:5432/familytree
+      DB_USER: familytree_app
+      DB_PASSWORD: ${DB_PASSWORD}
+      CORS_ORIGIN: http://localhost:8081
+    ports:
+      - "${BIND_ADDR:-0.0.0.0}:8080:8080"
+    depends_on:
+      db:
+        condition: service_healthy
+
+  web:
+    build:
+      context: ./frontend
+      args:
+        VITE_API_URL: http://localhost:8080
+    ports:
+      - "${BIND_ADDR:-0.0.0.0}:8081:80"
+    depends_on:
+      - api
+
+volumes:
+  db-data:

@@ -33,5 +33,18 @@ pipeline {
                 success { archiveArtifacts artifacts: 'frontend/dist/**', fingerprint: true }
             }
         }
+
+        // Start de hele app (database, API, frontend) in de aparte dind-engine. De poorten staan via de
+        // jenkins-docker-container alleen op localhost van je pc open.
+        stage('Deploy (lokaal)') {
+            agent any
+            steps {
+                // Het wachtwoord komt uit Jenkins Credentials (Secret text, id familytree-db-password), nooit uit de code.
+                withCredentials([string(credentialsId: 'familytree-db-password', variable: 'DB_PASSWORD')]) {
+                    sh 'docker compose up -d --build --remove-orphans'
+                }
+                echo 'Frontend: http://localhost:8081   API: http://localhost:8080/api/health'
+            }
+        }
     }
 }

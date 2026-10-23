@@ -1,0 +1,16 @@
+# Backend (ApiServer) als container. Twee fases: eerst bouwen met Maven, daarna alleen het resultaat op een kleine Java-runtime.
+FROM maven:3.9-eclipse-temurin-25 AS build
+WORKDIR /src
+# Eerst alleen de pom: de dependencies worden zo gecachet zolang de pom niet verandert.
+COPY pom.xml .
+RUN mvn -B -q dependency:copy-dependencies -DincludeScope=runtime -DoutputDirectory=/out/lib
+COPY src ./src
+RUN mvn -B -q -DskipTests package && cp target/family-tree-*.jar /out/app.jar
+
+FROM eclipse-temurin:25-jre
+WORKDIR /app
+COPY --from=build /out/ ./
+# Niet als root draaien.
+USER 1000
+EXPOSE 8080
+CMD ["java", "-cp", "app.jar:lib/*", "ApiServer"]
